@@ -1,29 +1,39 @@
 ### Início do Pré-processamento
 
-# Remoção de Atributos não utilizados
-
-df$numerovoo <- NULL
-df$diautilpartida <- NULL
-
 # Merge
 
 df <- bindData(voo_sem_atraso_transformed, voo_com_atraso_transformed)
 
+# Atributos Categóricos
+
+df1 <- df[,c("siglaempresa","aeroportopartida","aeroportochegada", 
+"diasemana", "mes", "conditions_dep", "conditions_arr", "time_dep", 
+"time_arr", "wdirection_dep", "wdirection_arr")]
+
+# Atributos Não Categóricos
+
+df2 <- df[,c("alvo", "temp_dep","dew_dep","pressure_dep","humid_dep",
+"wspeed_dep","temp_arr","dew_arr","pressure_arr","humid_arr", "wspeed_arr")]
+
 # Transformação de dados categóricos
 
-df <- transformCategoricData(df, c("siglaempresa","aeroportopartida",
+df1 <- transformCategoricData(df1, c("siglaempresa","aeroportopartida",
 "aeroportochegada","mes","diasemana","time_dep","time_arr","conditions_dep",
 "conditions_arr","wdirection_dep","wdirection_arr"))
 
 # Normalização
 
-df <- normalize.minmax(df)
+df2 <- normalize.minmax(df2)
 
-df <- df[[1]]
+df2 <- df2[[1]]
+
+# Junção de Categóricos e Não Categóricos
+
+df3 <- cbind(df2,df1) # Nesta ordem
 
 # Lasso
 
-df_lasso <- fs.lasso(df, "alvo") 
+df_lasso <- fs.lasso(df3, "alvo") 
 
 
 df_lasso <- df_lasso[[1]]
