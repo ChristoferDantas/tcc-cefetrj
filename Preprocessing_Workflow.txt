@@ -1,0 +1,32 @@
+### Início do Pré-processamento
+
+# Remoção de Atributos não utilizados
+
+df$numerovoo <- NULL
+df$diautilpartida <- NULL
+
+# Merge
+
+df <- bindData(voo_sem_atraso_transformed, voo_com_atraso_transformed)
+
+# Transformação de dados categóricos
+
+df <- transformCategoricData(df, c("siglaempresa","aeroportopartida",
+"aeroportochegada","mes","diasemana","time_dep","time_arr","conditions_dep",
+"conditions_arr","wdirection_dep","wdirection_arr"))
+
+# Normalização
+
+df <- normalize.minmax(df)
+
+df <- df[[1]]
+
+# Lasso
+
+df_lasso <- fs.lasso(df, "alvo") 
+
+
+df_lasso <- df_lasso[[1]]
+
+### Fim do Pré-processamento
+
