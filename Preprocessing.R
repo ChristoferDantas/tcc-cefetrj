@@ -39,7 +39,8 @@ pre_load <- function(){
 }
 
 # SEPARATE DATA #
-divideTrainAndTest <- function(data, percentual=0.8) {
+divideTrainAndTest <- function(data, percentual=0.8, seed=500) {
+  set.seed(seed)
   x <- data
   ntrain <- round(nrow(x)*percentual) 
   tindex <- sample(nrow(x), ntrain)
