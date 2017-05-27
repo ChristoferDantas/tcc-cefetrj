@@ -38,6 +38,17 @@ pre_load <- function(){
 
 }
 
+# SEPARATE DATA #
+divideTrainAndTest <- function(data, percentual=0.8) {
+  x <- data
+  ntrain <- round(nrow(x)*percentual) 
+  tindex <- sample(nrow(x), ntrain)
+  xtrain <- x[tindex,]
+  xtest <- x[-tindex,]
+  
+  return (list(xtrain, xtest))
+}
+
 # DATA CLEANING #
 
 cleanData <- function(df){
