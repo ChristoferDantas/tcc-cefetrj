@@ -38,18 +38,6 @@ pre_load <- function(){
 
 }
 
-# SEPARATE DATA #
-divideTrainAndTest <- function(data, percentual=0.8, seed=500) {
-  set.seed(seed)
-  x <- data
-  ntrain <- round(nrow(x)*percentual) 
-  tindex <- sample(nrow(x), ntrain)
-  xtrain <- x[tindex,]
-  xtest <- x[-tindex,]
-  
-  return (list(xtrain, xtest))
-}
-
 # DATA CLEANING #
 
 cleanData <- function(df){
@@ -214,6 +202,27 @@ transformData <- function(df){
   
   df[["winddirdegrees_arr"]] <- NULL 
   
+  df[["mes"]][df[["mes"]] == "1"] <- "Janeiro"
+  df[["mes"]][df[["mes"]] == "2"] <- "Fevereiro"
+  df[["mes"]][df[["mes"]] == "3"] <- "Março"
+  df[["mes"]][df[["mes"]] == "4"] <- "Abril"
+  df[["mes"]][df[["mes"]] == "5"] <- "Maio"
+  df[["mes"]][df[["mes"]] == "6"] <- "Junho"
+  df[["mes"]][df[["mes"]] == "7"] <- "Julho"
+  df[["mes"]][df[["mes"]] == "8"] <- "Agosto"
+  df[["mes"]][df[["mes"]] == "9"] <- "Setembro"
+  df[["mes"]][df[["mes"]] == "10"] <- "Outubro"
+  df[["mes"]][df[["mes"]] == "11"] <- "Novembro"
+  df[["mes"]][df[["mes"]] == "12"] <- "Dezembro"
+  
+  df[["diasemana"]][df[["diasemana"]] == "0"] <- "Domingo"
+  df[["diasemana"]][df[["diasemana"]] == "1"] <- "Segunda-Feira"
+  df[["diasemana"]][df[["diasemana"]] == "2"] <- "Terça-Feira"
+  df[["diasemana"]][df[["diasemana"]] == "3"] <- "Quarta-Feira"
+  df[["diasemana"]][df[["diasemana"]] == "4"] <- "Quinta-Feira"
+  df[["diasemana"]][df[["diasemana"]] == "5"] <- "Sexta-Feira"
+  df[["diasemana"]][df[["diasemana"]] == "6"] <- "Sábado"
+
   return(df)
   
 }
