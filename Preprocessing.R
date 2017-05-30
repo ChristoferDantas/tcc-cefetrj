@@ -204,7 +204,7 @@ transformData <- function(df){
   
   df[["mes"]][df[["mes"]] == "1"] <- "Janeiro"
   df[["mes"]][df[["mes"]] == "2"] <- "Fevereiro"
-  df[["mes"]][df[["mes"]] == "3"] <- "Mar�o"
+  df[["mes"]][df[["mes"]] == "3"] <- "Março"
   df[["mes"]][df[["mes"]] == "4"] <- "Abril"
   df[["mes"]][df[["mes"]] == "5"] <- "Maio"
   df[["mes"]][df[["mes"]] == "6"] <- "Junho"
@@ -217,11 +217,11 @@ transformData <- function(df){
   
   df[["diasemana"]][df[["diasemana"]] == "0"] <- "Domingo"
   df[["diasemana"]][df[["diasemana"]] == "1"] <- "Segunda-Feira"
-  df[["diasemana"]][df[["diasemana"]] == "2"] <- "Ter�a-Feira"
+  df[["diasemana"]][df[["diasemana"]] == "2"] <- "Terça-Feira"
   df[["diasemana"]][df[["diasemana"]] == "3"] <- "Quarta-Feira"
   df[["diasemana"]][df[["diasemana"]] == "4"] <- "Quinta-Feira"
   df[["diasemana"]][df[["diasemana"]] == "5"] <- "Sexta-Feira"
-  df[["diasemana"]][df[["diasemana"]] == "6"] <- "S�bado"
+  df[["diasemana"]][df[["diasemana"]] == "6"] <- "Sábado"
 
   return(df)
   
@@ -274,7 +274,7 @@ remove_outliers <- function(x.train){
 
 # DATA TRANSFORMATION #
 
-# TRANSFORMAÇÃO DADOS NOMINAIS PARA DADOS NUMERICOS
+# TRANSFORMAÃÃO DADOS NOMINAIS PARA DADOS NUMERICOS
 
 nominalToNumeric <- function(df, attsToTransform){
   
@@ -473,4 +473,15 @@ sample.stratified_kfold <- function(data, clabel, k=10)
   }
   sets = append(sets, list(data))
   return (sets)
+}
+
+# DIVIDE DATA INTO TRAIN AND TEST
+divideTrainAndTest <- function(data, percentual=0.8) {
+  x<- data
+  ntrain <- round(nrow(x)*percentual)
+  tindex <- sample(nrow(x), ntrain)
+  xtrain <- x[tindex,]
+  xtest <- x[-tindex,]
+  
+  return (list(xtrain, xtest))
 }
